@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "filedropper\Presentation.csproj", "{F30EBBB5-FF91-4640-B6D5-C743EFCECC94}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B68FCEC3-D9D5-4285-9C96-81C0A081CFC1}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2632BA37-6A4E-4FD7-BA1D-0B066906C81A}"
 EndProject
@@ -13,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{D9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{5080E2BD-E01F-4626-96CA-547AFA024E42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{532243C1-8A5A-421C-B756-EC452DEA8063}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{532243C1-8A5A-421C-B756-EC452DEA8063}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

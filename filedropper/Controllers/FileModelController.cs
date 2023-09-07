@@ -14,23 +14,35 @@ namespace filedropper.Controllers
 
         // POST api/<FileModelController>
         [HttpPost]
-        public ActionResult Post(IFormFileCollection files)
+        public ActionResult PostNewFile(IFormFileCollection files)
         {
-            List<FileModel> newFiles = new List<FileModel>();
+            List<FileModel> responseFiles = new List<FileModel>();
+
             foreach (IFormFile f in files)
             {
+
                 FileModel file = new FileModel();
                 file.File = f;
 
                 //save to dir
                 SaveFile(file);
 
-                //save dir info to db
-                ConnectionConfig.Connection.PostNewFileToDb(file);
-                newFiles.Add(file);
+                //check if exception exists
+                if (file.Error == false)
+                {
+
+                    //save dir info to db
+                    ConnectionConfig.Connection.PostNewFileToDb(file);
+                }
+
+                responseFiles.Add(file);
             }
 
-            return Ok(newFiles);
+
+            return Ok(responseFiles);
+
+
+
         }
 
         //TODO add get existing files

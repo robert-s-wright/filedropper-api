@@ -13,11 +13,20 @@ namespace Application
 
             Directory.CreateDirectory(dir);
 
-            using (Stream fileStream = new FileStream(path, FileMode.Create))
+            try
             {
-                file.File.CopyToAsync(fileStream);
+                using (Stream fileStream = new FileStream(path, FileMode.CreateNew))
+                {
+                    file.File.CopyToAsync(fileStream);
+
+                }
+                file.Location = path;
+
             }
-            file.Location = path;
+            catch
+            {
+                file.Error = true;
+            }
         }
 
     }
