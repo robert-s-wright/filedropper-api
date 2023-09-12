@@ -3,7 +3,7 @@ using Application.DataAccess;
 
 var AllowSpecificOrigins = "_allowSpecificOrigins";
 
-ConnectionConfig.InitializeConnection(DatabaseType.Sql);
+ConnectionConfig.InitializeConnection(DatabaseType.Sql, "filedropper");
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -6,7 +6,7 @@ namespace Presentation.ControllerModels
     {
         public bool Error;
 
-        public FileModel File;
+        public FileUploadModel File;
 
 
     }

@@ -8,11 +8,22 @@ namespace Application
     public static class ConnectionConfig
     {
         public static IDataConnection Connection { get; private set; }
+        public static string dbName { get; private set; }
 
-        public static string GetConnectionString(string name)
+        public static void InitializeConnection(DatabaseType db, string name)
+        {
+            if (db == DatabaseType.Sql)
+            {
+                SqlConnector sql = new SqlConnector();
+                Connection = sql;
+                dbName = name;
+            }
+
+        }
+        public static string CnnString()
         {
             IConfiguration config;
-            //TODO add appsettings.development.json
+
             if (Debugger.IsAttached)
             {
                 config = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
@@ -23,26 +34,7 @@ namespace Application
                 config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             }
 
-
-            string connectionString = config.GetConnectionString(name);
-
-            return connectionString;
-        }
-
-        public static void InitializeConnection(DatabaseType db)
-        {
-            if (db == DatabaseType.Sql)
-            {
-                SqlConnector sql = new SqlConnector();
-                Connection = sql;
-            }
-        }
-
-        public static string CnnString(string name)
-        {
-            string connectionString = GetConnectionString(name);
-
-            return connectionString;
+            return config.GetConnectionString(dbName);
 
         }
     }

@@ -1,9 +1,16 @@
-﻿using Domain;
+﻿using Domain.Models;
 
 namespace Application.DataAccess
 {
     public interface IDataConnection
     {
-        void PostNewFileToDb(FileModel file);
+        void PostNewFileToDb(FileSaveModel file);
+
+        List<FileRetrieveModel> GetAllFilesFromDb();
+
+        FileRetrieveModel GetFileById(int fileId);
+
+        //file list methods
+        List<FileListModel> GetAllFilesWExt();
     }
 }

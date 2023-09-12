@@ -1,7 +1,7 @@
 ﻿using Application;
-using Domain;
+using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using static Application.Methods;
+using static Application.DirectoryConfig;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,39 +11,47 @@ namespace filedropper.Controllers
     [ApiController]
     public class FileModelController : ControllerBase
     {
-
         // POST api/<FileModelController>
         [HttpPost]
         public ActionResult PostNewFile(IFormFileCollection files)
         {
-            List<FileModel> responseFiles = new List<FileModel>();
+            List<FileSaveModel> newFiles = new List<FileSaveModel>();
+
 
             foreach (IFormFile f in files)
             {
 
-                FileModel file = new FileModel();
+                FileSaveModel file = new FileSaveModel();
                 file.File = f;
 
                 //save to dir
-                SaveFile(file);
+                //SaveFile(file);
+                bool exists = file.SaveFile(GetBaseDir());
 
                 //check if exception exists
-                if (file.Error == false)
+                if (exists == false)
                 {
 
                     //save dir info to db
                     ConnectionConfig.Connection.PostNewFileToDb(file);
                 }
 
-                responseFiles.Add(file);
+                newFiles.Add(file);
             }
 
-
-            return Ok(responseFiles);
-
-
+            return Ok(newFiles);
 
         }
+
+
+
+
+        //POST api/<FileModelController>/Stream
+        //[Route("streaming")]
+        //public async Task<IActionResult> PostStream()
+        //{
+        //    return Ok();
+        //}
 
         //TODO add get existing files
         //TODO delete existing files
