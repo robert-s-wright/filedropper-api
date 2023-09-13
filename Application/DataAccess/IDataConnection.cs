@@ -4,7 +4,7 @@ namespace Application.DataAccess
 {
     public interface IDataConnection
     {
-        void PostNewFileToDb(FileSaveModel file);
+        FileListModel PostNewFileToDb(FileSaveModel file);
 
         List<FileRetrieveModel> GetAllFilesFromDb();
 

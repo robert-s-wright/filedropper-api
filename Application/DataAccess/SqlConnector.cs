@@ -8,8 +8,9 @@ namespace Application.DataAccess
 {
     internal class SqlConnector : IDataConnection
     {
-        public void PostNewFileToDb(FileSaveModel file)
+        public FileListModel PostNewFileToDb(FileSaveModel file)
         {
+            FileListModel newFile = new();
             using (IDbConnection connection = new SqlConnection(ConnectionConfig.CnnString()))
             {
                 var p = new DynamicParameters();
@@ -20,7 +21,10 @@ namespace Application.DataAccess
 
                 connection.Execute("dbo.spFiles_Insert", p, commandType: CommandType.StoredProcedure);
                 file.Id = p.Get<int>("@id");
+
+                newFile = file.CastToListModel();
             }
+            return newFile;
         }
 
         public List<FileRetrieveModel> GetAllFilesFromDb()

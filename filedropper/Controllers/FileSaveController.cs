@@ -9,52 +9,41 @@ namespace filedropper.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FileModelController : ControllerBase
+    public class FileSaveController : ControllerBase
     {
         // POST api/<FileModelController>
         [HttpPost]
         public ActionResult PostNewFile(IFormFileCollection files)
         {
-            List<FileSaveModel> newFiles = new List<FileSaveModel>();
+            List<FileListModel> newFiles = new();
 
 
             foreach (IFormFile f in files)
             {
 
-                FileSaveModel file = new FileSaveModel();
-                file.File = f;
+                FileSaveModel file = new() { File = f };
 
                 //save to dir
-                //SaveFile(file);
                 bool exists = file.SaveFile(GetBaseDir());
 
                 //check if exception exists
                 if (exists == false)
                 {
-
                     //save dir info to db
-                    ConnectionConfig.Connection.PostNewFileToDb(file);
+                    newFiles.Add(ConnectionConfig.Connection.PostNewFileToDb(file));
+
+                }
+                else
+                {
+                    newFiles.Add(file.CastToListModel());
                 }
 
-                newFiles.Add(file);
             }
-
             return Ok(newFiles);
 
         }
 
-
-
-
-        //POST api/<FileModelController>/Stream
-        //[Route("streaming")]
-        //public async Task<IActionResult> PostStream()
-        //{
-        //    return Ok();
-        //}
-
-        //TODO add get existing files
         //TODO delete existing files
-        //TODO get file by ID > download
+
     }
 }

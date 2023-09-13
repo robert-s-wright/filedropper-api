@@ -4,7 +4,7 @@ namespace Domain.Models
 {
     public class FileSaveModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public IFormFile File { get; set; }
         public string Location { get; set; }
         public string Type { get; set; }
@@ -33,6 +33,16 @@ namespace Domain.Models
             {
                 return true;
             }
+        }
+
+        public FileListModel CastToListModel()
+        {
+            return new FileListModel
+            {
+                Id = this.Id,
+                Name = this.File.FileName,
+                Type = this.File.ContentType.ToString()
+            };
         }
 
     }
